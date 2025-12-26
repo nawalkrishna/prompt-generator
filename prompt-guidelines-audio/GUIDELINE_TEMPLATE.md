@@ -12,7 +12,7 @@ Use this template when building or reviewing prompts. This template is modality-
 | **Audience / Persona** | YES | Who or what consumes the output | Include skill level, context, constraints |
 | **Input constraints** | YES | Allowed inputs, size limits, formats | Define boundaries; avoid scope creep |
 | **Output format** | YES | Expected output structure (schema, type, length) | Be precise; don't assume defaults |
-| **Tone / Style** | CONDITIONAL | Voice, register, register, persona (for text/audio) | Omit only if not applicable to modality |
+| **Tone / Style** | CONDITIONAL | Voice, register, persona (for text/audio) | Omit only if not applicable to modality |
 | **Core instructions** | YES | Step-by-step directions for the model | Clear, logical, sequenced |
 | **Required fields** | YES | Critical attributes that must appear in output | Explicit list; no ambiguity |
 | **Safety / Guardrails** | YES | Sensitive content checks, PII, consent, disallowed outputs | Document all constraints |
