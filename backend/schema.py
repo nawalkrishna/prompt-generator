@@ -40,3 +40,12 @@ class VoicePrompt(CanonicalPrompt):
     emotion: Optional[str] = None
     pace: Optional[str] = None
     use_case: Optional[str] = None
+
+
+@dataclass
+class TextPrompt(CanonicalPrompt):
+    task_type: Optional[str] = None  # e.g., "creative writing", "code generation", "analysis"
+    tone: Optional[str] = None  # e.g., "formal", "casual", "technical"
+    format: Optional[str] = None  # e.g., "markdown", "json", "plain text"
+    length: Optional[str] = None  # e.g., "short", "medium", "long"
+    context: Optional[str] = None  # additional context for the task

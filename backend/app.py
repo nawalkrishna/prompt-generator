@@ -4,7 +4,7 @@ from datetime import datetime
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from compiler import PromptCompiler
-from schema import ImagePrompt, VideoPrompt, VoicePrompt
+from schema import ImagePrompt, VideoPrompt, VoicePrompt, TextPrompt
 from registry import get_available_models_by_modality
 from rate_limiter import rate_limit, sanitize_payload
 
@@ -44,8 +44,8 @@ def validate_request_data(data):
     if not modality:
         return "Missing required field: modality", 400
 
-    if modality not in ["image", "video", "voice"]:
-        return f"Invalid modality: {modality}. Must be one of: image, video, voice", 400
+    if modality not in ["text", "image", "video", "audio"]:
+        return f"Invalid modality: {modality}. Must be one of: text, image, video, audio", 400
 
     if not model:
         return "Missing required field: model", 400
@@ -127,11 +127,13 @@ def generate_prompt():
 
         # Create appropriate prompt object
         try:
-            if modality == "image":
+            if modality == "text":
+                prompt = TextPrompt(**payload)
+            elif modality == "image":
                 prompt = ImagePrompt(**payload)
             elif modality == "video":
                 prompt = VideoPrompt(**payload)
-            elif modality == "voice":
+            elif modality == "audio":
                 prompt = VoicePrompt(**payload)
         except TypeError as e:
             logger.error(f"Invalid payload structure: {str(e)}")

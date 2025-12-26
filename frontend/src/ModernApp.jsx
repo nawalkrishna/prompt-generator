@@ -15,7 +15,7 @@ import "./styles/ModernApp.css";
  * Features: Glassmorphism, animations, particles, advanced UX
  */
 function ModernApp() {
-  const [modality, setModality] = useState("image");
+  const [modality, setModality] = useState("text");
   const [result, setResult] = useState("");
   const [currentModel, setCurrentModel] = useState("");
   const [currentInputs, setCurrentInputs] = useState({});
@@ -200,15 +200,23 @@ function ModernApp() {
           {/* Stats Bar */}
           <div className="stats-bar glass-card">
             <div className="stat-item">
-              <div className="stat-icon">⚡</div>
+              <div className="stat-icon">🤖</div>
               <div className="stat-content">
-                <div className="stat-value">10</div>
+                <div className="stat-value">20</div>
                 <div className="stat-label">AI Models</div>
               </div>
             </div>
             <div className="stat-divider"></div>
             <div className="stat-item">
-              <div className="stat-icon">🎨</div>
+              <div className="stat-icon">🎯</div>
+              <div className="stat-content">
+                <div className="stat-value">4</div>
+                <div className="stat-label">Modalities</div>
+              </div>
+            </div>
+            <div className="stat-divider"></div>
+            <div className="stat-item">
+              <div className="stat-icon">📝</div>
               <div className="stat-content">
                 <div className="stat-value">{history.length}</div>
                 <div className="stat-label">Generated</div>
@@ -222,14 +230,6 @@ function ModernApp() {
                   {history.filter((h) => h.favorite).length}
                 </div>
                 <div className="stat-label">Favorites</div>
-              </div>
-            </div>
-            <div className="stat-divider"></div>
-            <div className="stat-item">
-              <div className="stat-icon">🔥</div>
-              <div className="stat-content">
-                <div className="stat-value">∞</div>
-                <div className="stat-label">Possibilities</div>
               </div>
             </div>
           </div>

@@ -8,32 +8,54 @@ export const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5
 
 // Available models by modality
 export const MODELS = {
+  text: [
+    { value: "gpt-4", label: "GPT-4 / GPT-4.1 / GPT-4o", description: "OpenAI's most capable model" },
+    { value: "llama-3", label: "Meta LLaMA 3", description: "Open-source powerhouse" },
+    { value: "mistral", label: "Mistral / Mixtral", description: "Efficient European AI" },
+    { value: "gemini", label: "Google Gemini", description: "Multimodal intelligence" },
+    { value: "claude", label: "Anthropic Claude", description: "Advanced reasoning and analysis" },
+  ],
   image: [
-    { value: "dalle-3", label: "DALL-E 3", description: "OpenAI's latest image generator" },
-    { value: "midjourney-v6", label: "Midjourney v6", description: "High-quality artistic images" },
-    { value: "sdxl", label: "Stable Diffusion XL", description: "Open-source, customizable" },
+    { value: "dalle", label: "DALL·E", description: "OpenAI's image generator" },
+    { value: "stable-diffusion", label: "Stable Diffusion", description: "Open-source, customizable" },
+    { value: "midjourney", label: "Midjourney", description: "High-quality artistic images" },
     { value: "imagen", label: "Google Imagen", description: "Photorealistic generations" },
     { value: "firefly", label: "Adobe Firefly", description: "Commercial-safe content" },
   ],
   video: [
-    { value: "runway-gen3", label: "Runway Gen-3", description: "Cinematic video generation" },
-    { value: "pika", label: "Pika", description: "Easy-to-use video creator" },
     { value: "sora", label: "OpenAI Sora", description: "Advanced coherent videos" },
+    { value: "runway", label: "Runway Gen-2 / Gen-3", description: "Cinematic video generation" },
+    { value: "pika", label: "Pika Labs Pika", description: "Easy-to-use video creator" },
+    { value: "veo", label: "Google Veo", description: "High-quality video generation" },
+    { value: "stable-video-diffusion", label: "Stable Video Diffusion", description: "Open-source video AI" },
   ],
-  voice: [
-    { value: "openai-voice", label: "OpenAI Voice", description: "Natural text-to-speech" },
+  audio: [
+    { value: "openai-audio", label: "OpenAI Whisper + TTS", description: "Speech recognition & synthesis" },
     { value: "elevenlabs", label: "ElevenLabs", description: "Ultra-realistic voices" },
+    { value: "seamless-m4t", label: "Meta SeamlessM4T", description: "Multilingual translation & speech" },
+    { value: "indic-tts", label: "AI4Bharat Indic TTS/STT", description: "Indian language support" },
+    { value: "coqui-tts", label: "Coqui TTS", description: "Open-source TTS" },
   ],
 };
 
 // Validation rules for required fields
 export const REQUIRED_FIELDS = {
+  text: {
+    common: ["goal", "subject"],
+    models: {
+      "gpt-4": [],
+      "llama-3": [],
+      "mistral": [],
+      "gemini": [],
+      "claude": [],
+    },
+  },
   image: {
     common: ["subject", "style"],
     models: {
-      "dalle-3": [],
-      "midjourney-v6": [],
-      "sdxl": [],
+      "dalle": [],
+      "stable-diffusion": [],
+      "midjourney": [],
       "imagen": [],
       "firefly": [],
     },
@@ -41,22 +63,37 @@ export const REQUIRED_FIELDS = {
   video: {
     common: ["scene", "action", "duration_seconds"],
     models: {
-      "runway-gen3": ["camera_motion"],
-      "pika": [],
       "sora": [],
+      "runway": ["camera_motion"],
+      "pika": [],
+      "veo": [],
+      "stable-video-diffusion": [],
     },
   },
-  voice: {
-    common: ["accent", "emotion", "pace"],
+  audio: {
+    common: ["subject", "accent", "emotion", "pace"],
     models: {
-      "openai-voice": [],
+      "openai-audio": [],
       "elevenlabs": [],
+      "seamless-m4t": [],
+      "indic-tts": [],
+      "coqui-tts": [],
     },
   },
 };
 
 // Field definitions for dynamic form generation
 export const FIELD_DEFINITIONS = {
+  text: [
+    { name: "goal", label: "Goal", placeholder: "e.g., Write a blog post, Generate code, Analyze data", required: true, type: "text" },
+    { name: "subject", label: "Subject", placeholder: "e.g., AI in healthcare, Python web scraper", required: true, type: "textarea" },
+    { name: "task_type", label: "Task Type", placeholder: "e.g., creative writing, code generation, analysis", type: "text" },
+    { name: "tone", label: "Tone", placeholder: "e.g., formal, casual, technical, friendly", type: "text" },
+    { name: "format", label: "Output Format", placeholder: "e.g., markdown, json, plain text, code", type: "text" },
+    { name: "length", label: "Length", placeholder: "short, medium, long", type: "select", options: ["short", "medium", "long"] },
+    { name: "context", label: "Additional Context", placeholder: "Any background information or constraints", type: "textarea" },
+    { name: "style", label: "Writing Style", placeholder: "e.g., concise, detailed, conversational", type: "text" },
+  ],
   image: [
     { name: "subject", label: "Subject", placeholder: "e.g., a cat sitting on a windowsill", required: true, type: "text" },
     { name: "style", label: "Style", placeholder: "e.g., photorealistic, oil painting, anime", required: true, type: "text" },
@@ -74,9 +111,9 @@ export const FIELD_DEFINITIONS = {
     { name: "lighting", label: "Lighting", placeholder: "e.g., natural daylight, neon", type: "text" },
     { name: "style", label: "Style", placeholder: "e.g., cinematic, documentary", type: "text" },
   ],
-  voice: [
+  audio: [
     { name: "subject", label: "Text/Script", placeholder: "What should be spoken?", required: true, type: "textarea" },
-    { name: "accent", label: "Accent", placeholder: "e.g., American, British, Australian", required: true, type: "text" },
+    { name: "accent", label: "Accent/Language", placeholder: "e.g., American, British, Hindi, Tamil", required: true, type: "text" },
     { name: "emotion", label: "Emotion", placeholder: "e.g., calm, excited, serious", required: true, type: "text" },
     { name: "pace", label: "Pace", placeholder: "slow, medium, fast", required: true, type: "select", options: ["slow", "medium", "fast"] },
     { name: "voice_gender", label: "Voice Gender", placeholder: "male, female, neutral", type: "select", options: ["male", "female", "neutral"] },
@@ -87,6 +124,41 @@ export const FIELD_DEFINITIONS = {
 
 // Prompt templates
 export const TEMPLATES = {
+  text: {
+    blog: {
+      name: "Blog Post",
+      values: {
+        goal: "Write a blog post",
+        subject: "The impact of AI on modern healthcare",
+        task_type: "creative writing",
+        tone: "professional",
+        format: "markdown",
+        length: "medium",
+      },
+    },
+    code: {
+      name: "Code Generation",
+      values: {
+        goal: "Generate a function",
+        subject: "Sort an array of objects by date in Python",
+        task_type: "code generation",
+        tone: "technical",
+        format: "python",
+        length: "short",
+      },
+    },
+    analysis: {
+      name: "Data Analysis",
+      values: {
+        goal: "Analyze and summarize",
+        subject: "Market trends in renewable energy sector",
+        task_type: "analysis",
+        tone: "formal",
+        format: "markdown",
+        length: "long",
+      },
+    },
+  },
   image: {
     portrait: {
       name: "Portrait Photography",
@@ -143,7 +215,7 @@ export const TEMPLATES = {
       },
     },
   },
-  voice: {
+  audio: {
     podcast: {
       name: "Podcast Host",
       values: {
@@ -164,6 +236,17 @@ export const TEMPLATES = {
         pace: "slow",
         voice_gender: "male",
         use_case: "audiobook",
+      },
+    },
+    multilingual: {
+      name: "Multilingual Speech",
+      values: {
+        subject: "नमस्ते, आज हम बात करेंगे",
+        accent: "Hindi",
+        emotion: "friendly",
+        pace: "medium",
+        voice_gender: "female",
+        use_case: "announcement",
       },
     },
   },

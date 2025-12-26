@@ -10,31 +10,62 @@ from adapters.image import (
     ImagenAdapter,
     FireflyAdapter,
 )
-from adapters.video import RunwayAdapter, PikaAdapter, SoraAdapter
-from adapters.voice import OpenAIVoiceAdapter, ElevenLabsAdapter
+from adapters.video import (
+    SoraAdapter,
+    RunwayAdapter,
+    PikaAdapter,
+    VeoAdapter,
+    StableVideoDiffusionAdapter,
+)
+from adapters.audio import (
+    OpenAIAudioAdapter,
+    ElevenLabsAdapter,
+    SeamlessM4TAdapter,
+    IndicTTSAdapter,
+    CoquiTTSAdapter,
+)
+from adapters.text import (
+    GPT4Adapter,
+    LlamaAdapter,
+    MistralAdapter,
+    GeminiAdapter,
+    ClaudeAdapter,
+)
 
 # Registry mapping model names to adapter instances
 ADAPTER_REGISTRY = {
+    # Text/LLM models
+    "gpt-4": GPT4Adapter(),
+    "llama-3": LlamaAdapter(),
+    "mistral": MistralAdapter(),
+    "gemini": GeminiAdapter(),
+    "claude": ClaudeAdapter(),
     # Image models
-    "dalle-3": DalleAdapter(),
-    "midjourney-v6": MidjourneyAdapter(),
-    "sdxl": StableDiffusionAdapter(),
+    "dalle": DalleAdapter(),
+    "stable-diffusion": StableDiffusionAdapter(),
+    "midjourney": MidjourneyAdapter(),
     "imagen": ImagenAdapter(),
     "firefly": FireflyAdapter(),
     # Video models
-    "runway-gen3": RunwayAdapter(),
-    "pika": PikaAdapter(),
     "sora": SoraAdapter(),
-    # Voice models
-    "openai-voice": OpenAIVoiceAdapter(),
+    "runway": RunwayAdapter(),
+    "pika": PikaAdapter(),
+    "veo": VeoAdapter(),
+    "stable-video-diffusion": StableVideoDiffusionAdapter(),
+    # Audio models
+    "openai-audio": OpenAIAudioAdapter(),
     "elevenlabs": ElevenLabsAdapter(),
+    "seamless-m4t": SeamlessM4TAdapter(),
+    "indic-tts": IndicTTSAdapter(),
+    "coqui-tts": CoquiTTSAdapter(),
 }
 
 
 def get_available_models_by_modality():
     """Return available models grouped by modality."""
     return {
-        "image": ["dalle-3", "midjourney-v6", "sdxl", "imagen", "firefly"],
-        "video": ["runway-gen3", "pika", "sora"],
-        "voice": ["openai-voice", "elevenlabs"],
+        "text": ["gpt-4", "llama-3", "mistral", "gemini", "claude"],
+        "image": ["dalle", "stable-diffusion", "midjourney", "imagen", "firefly"],
+        "video": ["sora", "runway", "pika", "veo", "stable-video-diffusion"],
+        "audio": ["openai-audio", "elevenlabs", "seamless-m4t", "indic-tts", "coqui-tts"],
     }

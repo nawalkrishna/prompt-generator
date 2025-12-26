@@ -2,8 +2,26 @@ import "../styles/ModernModalitySelector.css";
 
 const modalities = [
   {
+    id: "text",
+    name: "Text",
+    subtitle: "LLM",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+        <polyline points="10 9 9 9 8 9" />
+      </svg>
+    ),
+    gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    bgColor: "rgba(102, 126, 234, 0.1)",
+    emoji: "📝",
+  },
+  {
     id: "image",
     name: "Image",
+    subtitle: "Generation",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
@@ -11,13 +29,14 @@ const modalities = [
         <polyline points="21 15 16 10 5 21" />
       </svg>
     ),
-    gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    description: "Generate prompts for AI image models",
-    features: ["DALL-E 3", "Midjourney", "Stable Diffusion"],
+    gradient: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+    bgColor: "rgba(250, 112, 154, 0.1)",
+    emoji: "🎨",
   },
   {
     id: "video",
     name: "Video",
+    subtitle: "Creation",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <polygon points="23 7 16 12 23 17 23 7" />
@@ -25,12 +44,13 @@ const modalities = [
       </svg>
     ),
     gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
-    description: "Generate prompts for AI video models",
-    features: ["Runway", "Pika", "Sora"],
+    bgColor: "rgba(240, 147, 251, 0.1)",
+    emoji: "🎬",
   },
   {
-    id: "voice",
-    name: "Voice",
+    id: "audio",
+    name: "Audio",
+    subtitle: "Synthesis",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
@@ -40,29 +60,45 @@ const modalities = [
       </svg>
     ),
     gradient: "linear-gradient(135deg, #4ade80 0%, #22c55e 100%)",
-    description: "Generate prompts for AI voice models",
-    features: ["OpenAI Voice", "ElevenLabs"],
+    bgColor: "rgba(74, 222, 128, 0.1)",
+    emoji: "🎙️",
   },
 ];
 
 /**
- * Modern Modality Selector with animated cards
+ * Ultra-Modern Modality Selector - Single Line with Beautiful Cards
  */
 function ModernModalitySelector({ modality, onModalityChange }) {
   return (
-    <div className="modality-selector">
-      <div className="selector-header">
-        <h2 className="selector-title">Choose Your Creative Medium</h2>
-        <p className="selector-subtitle">
-          Select a modality to start generating optimized AI prompts
+    <div className="modality-selector-v2">
+      {/* Floating Particles Background */}
+      <div className="particles-bg">
+        {[...Array(5)].map((_, i) => (
+          <div key={i} className={`particle particle-${i + 1}`}></div>
+        ))}
+      </div>
+
+      {/* Header Section */}
+      <div className="selector-header-v2">
+        <div className="header-badge">
+          <span className="pulse-dot"></span>
+          <span>Choose Your AI</span>
+        </div>
+        <h2 className="selector-title-v2">
+          <span className="title-line">Select Your</span>
+          <span className="title-highlight gradient-text">Creative Medium</span>
+        </h2>
+        <p className="selector-subtitle-v2">
+          Transform your ideas into reality with AI-powered generation
         </p>
       </div>
 
-      <div className="modality-cards">
+      {/* Modality Cards - Single Line */}
+      <div className="modality-cards-v2">
         {modalities.map((mod, index) => (
           <button
             key={mod.id}
-            className={`modality-card glass-card ${
+            className={`modality-card-v2 ${
               modality === mod.id ? "active" : ""
             }`}
             onClick={() => onModalityChange(mod.id)}
@@ -72,48 +108,59 @@ function ModernModalitySelector({ modality, onModalityChange }) {
             aria-pressed={modality === mod.id}
             aria-label={`Select ${mod.name} modality`}
           >
-            {/* Gradient Background */}
+            {/* Card Background with Gradient */}
             <div
-              className="card-gradient"
+              className="card-bg-gradient"
               style={{ background: mod.gradient }}
             ></div>
 
-            {/* Card Content */}
-            <div className="card-content">
-              <div className="card-icon">{mod.icon}</div>
-              <h3 className="card-title">{mod.name}</h3>
-              <p className="card-description">{mod.description}</p>
+            {/* Emoji Badge */}
+            <div className="card-emoji">{mod.emoji}</div>
 
-              {/* Features List */}
-              <div className="card-features">
-                {mod.features.map((feature) => (
-                  <span key={feature} className="feature-tag">
-                    {feature}
-                  </span>
-                ))}
-              </div>
+            {/* Icon Container */}
+            <div className="card-icon-container">
+              <div className="card-icon-v2">{mod.icon}</div>
             </div>
 
-            {/* Active Indicator */}
+            {/* Card Text */}
+            <div className="card-text">
+              <h3 className="card-title-v2">{mod.name}</h3>
+              <p className="card-subtitle-v2">{mod.subtitle}</p>
+            </div>
+
+            {/* Active Indicator Checkmark */}
             {modality === mod.id && (
-              <div className="active-indicator">
+              <div className="active-check">
                 <svg
-                  width="20"
-                  height="20"
+                  width="16"
+                  height="16"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </div>
             )}
 
-            {/* Hover Glow */}
-            <div className="card-glow" style={{ background: mod.gradient }}></div>
+            {/* Shimmer Effect */}
+            <div className="card-shimmer"></div>
+
+            {/* Glow on Hover */}
+            <div
+              className="card-glow-v2"
+              style={{ background: mod.gradient }}
+            ></div>
           </button>
         ))}
+      </div>
+
+      {/* Bottom Decorative Line */}
+      <div className="selector-divider">
+        <div className="divider-glow"></div>
       </div>
     </div>
   );
