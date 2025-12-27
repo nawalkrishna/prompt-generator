@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Favicon for Prompt Forge</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #0f172a;
+            color: white;
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 2rem;
+        }
+        .container {
+            text-align: center;
+            max-width: 800px;
+        }
+        h1 {
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        canvas {
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            margin: 2rem 0;
+            background: white;
+        }
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        .instructions {
+            margin-top: 2rem;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+        .instructions ol {
+            margin-left: 1.5rem;
+        }
+        .instructions code {
+            background: rgba(102, 126, 234, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Prompt Forge Favicon Generator</h1>
+        <p>Generate custom favicons for your Prompt Forge application</p>
+
+        <canvas id="favicon" width="512" height="512"></canvas>
+
+        <div class="buttons">
+            <button onclick="downloadFavicon(32)">Download 32x32 (favicon.ico)</button>
+            <button onclick="downloadFavicon(192)">Download 192x192 (logo192.png)</button>
+            <button onclick="downloadFavicon(512)">Download 512x512 (logo512.png)</button>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 Instructions:</h3>
+            <ol>
+                <li>Click the buttons above to download all three favicon sizes</li>
+                <li>Replace the existing files in <code>frontend/public/</code>:
+                    <ul>
+                        <li><code>favicon.ico</code> (32x32)</li>
+                        <li><code>logo192.png</code> (192x192)</li>
+                        <li><code>logo512.png</code> (512x512)</li>
+                    </ul>
+                </li>
+                <li>For favicon.ico: Use an online converter to convert the 32x32 PNG to ICO format</li>
+                <li>Restart your development server</li>
+                <li>Clear browser cache and refresh to see the new favicon!</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('favicon');
+        const ctx = canvas.getContext('2d');
+
+        function drawLogo(size) {
+            canvas.width = size;
+            canvas.height = size;
+
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+
+            // Create gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+
+            // Draw hexagon background
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const radius = size * 0.4;
+
+            for (let i = 0; i < 6; i++) {
+                const angle = (Math.PI / 3) * i - Math.PI / 2;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.closePath();
+            ctx.fill();
+
+            // Draw inner circle
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius * 0.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Draw "P" for Prompt
+            ctx.fillStyle = '#667eea';
+            ctx.font = `bold ${size * 0.4}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('P', centerX, centerY);
+        }
+
+        // Draw initial logo
+        drawLogo(512);
+
+        function downloadFavicon(size) {
+            drawLogo(size);
+
+            const link = document.createElement('a');
+            let filename;
+
+            if (size === 32) {
+                filename = 'favicon-32x32.png';
+            } else if (size === 192) {
+                filename = 'logo192.png';
+            } else {
+                filename = 'logo512.png';
+            }
+
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+
+            // Redraw the large version
+            setTimeout(() => drawLogo(512), 100);
+        }
+    </script>
+</body>
+</html>
