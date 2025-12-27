@@ -4,7 +4,9 @@
  */
 
 // API Configuration
-export const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+// In production on Vercel, use relative path. In development, use localhost.
+export const API_BASE_URL = process.env.REACT_APP_API_URL ||
+  (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000');
 
 // Available models by modality
 export const MODELS = {
