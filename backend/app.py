@@ -23,7 +23,13 @@ app = Flask(__name__)
 
 # Configure CORS - allow Vercel frontend and localhost
 allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,https://prompt-generator-1234.vercel.app").split(",")
-CORS(app, origins=allowed_origins, supports_credentials=True)
+CORS(
+    app,
+    origins=allowed_origins,
+    supports_credentials=True,
+    allow_headers=["Content-Type", "Authorization"],
+    methods=["GET", "POST", "OPTIONS"]
+)
 
 compiler = PromptCompiler()
 
@@ -102,10 +108,14 @@ def get_models():
         return jsonify({"error": "Failed to fetch models"}), 500
 
 
-@app.route("/generate", methods=["POST"])
+@app.route("/generate", methods=["POST", "OPTIONS"])
 @rate_limit(max_requests=int(os.getenv("RATE_LIMIT", 60)), window_seconds=60)
 def generate_prompt():
     """Generate optimized prompt for specified model."""
+    # Handle preflight OPTIONS request
+    if request.method == "OPTIONS":
+        return "", 200
+
     try:
         data = request.json
 
