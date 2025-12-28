@@ -135,6 +135,5 @@ def generate_prompt():
 
 
 # For Vercel serverless function
-def handler(request):
-    with app.request_context(request.environ):
-        return app.full_dispatch_request()
+# Export the app as the handler
+handler = app
