@@ -4,10 +4,10 @@
  */
 
 // API Configuration
-// In production on Vercel, use empty string (relative paths with /api prefix in api.js)
+// In production on Vercel, use Render backend URL
 // In development, use localhost backend
 export const API_BASE_URL = process.env.REACT_APP_API_URL ||
-  (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000');
+  (process.env.NODE_ENV === 'production' ? 'https://prompt-generator-backend-5xvi.onrender.com' : 'http://localhost:5000');
 
 // Available models by modality
 export const MODELS = {
