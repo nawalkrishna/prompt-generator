@@ -1,7 +1,17 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nFix vercel.json build configuration\n\n- Use @vercel/static-build for frontend\n- Remove custom buildCommand that was causing directory errors\n- Simplify routing configuration\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nFix react-scripts version in package.json\n\n- Change react-scripts from ^0.0.0 to 5.0.1\n- This fixes the build error on Vercel\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(npm run build:*)",
+      "Bash(git stash:*)",
+      "Bash(git pull:*)",
+      "Bash(ls:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nConfigure Vercel for full-stack deployment\n\n- Simplify vercel.json with buildCommand and outputDirectory\n- Configure rewrites to route /api requests to Python backend\n- Update Python handler for Vercel WSGI compatibility\n\nThis enables both frontend and backend deployment on Vercel\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit:*)"
     ]
   }
 }
