@@ -69,12 +69,14 @@ def validate_request_data(data):
     return None
 
 
+@app.route("/health", methods=["GET"])
 @app.route("/api/health", methods=["GET"])
 def health_check():
     """Health check endpoint."""
     return jsonify({"status": "healthy", "timestamp": datetime.utcnow().isoformat()})
 
 
+@app.route("/models", methods=["GET"])
 @app.route("/api/models", methods=["GET"])
 def get_models():
     """Get available models grouped by modality."""
@@ -85,6 +87,7 @@ def get_models():
         return jsonify({"error": "Failed to fetch models"}), 500
 
 
+@app.route("/generate", methods=["POST"])
 @app.route("/api/generate", methods=["POST"])
 def generate_prompt():
     """Generate optimized prompt for specified model."""
@@ -128,7 +131,5 @@ def generate_prompt():
         return jsonify({"error": "Internal server error"}), 500
 
 
-# For Vercel serverless function
-# Vercel expects a function called 'handler' or the app itself
-# The app object is already a WSGI application
-app = app
+# For Vercel serverless functions
+# The Flask app is automatically detected and served
