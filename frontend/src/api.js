@@ -66,7 +66,7 @@ async function apiRequest(endpoint, options = {}) {
  * @returns {Promise<import('./types').PromptResponse>} Generated prompt
  */
 export async function generatePrompt(data) {
-  return apiRequest("/generate", {
+  return apiRequest("/api/generate", {
     method: "POST",
     body: JSON.stringify(data),
   });
@@ -77,7 +77,7 @@ export async function generatePrompt(data) {
  * @returns {Promise<{models: Object}>} Available models
  */
 export async function getAvailableModels() {
-  return apiRequest("/models", {
+  return apiRequest("/api/models", {
     method: "GET",
   });
 }
@@ -87,7 +87,7 @@ export async function getAvailableModels() {
  * @returns {Promise<{status: string, timestamp: string}>} Health status
  */
 export async function healthCheck() {
-  return apiRequest("/health", {
+  return apiRequest("/api/health", {
     method: "GET",
   });
 }

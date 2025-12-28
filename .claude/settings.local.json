@@ -11,7 +11,8 @@
       "Bash(git pull:*)",
       "Bash(ls:*)",
       "Bash(git commit -m \"$\\(cat <<''EOF''\nConfigure Vercel for full-stack deployment\n\n- Simplify vercel.json with buildCommand and outputDirectory\n- Configure rewrites to route /api requests to Python backend\n- Update Python handler for Vercel WSGI compatibility\n\nThis enables both frontend and backend deployment on Vercel\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(cat:*)"
     ]
   }
 }
