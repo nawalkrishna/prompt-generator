@@ -135,5 +135,6 @@ def generate_prompt():
 
 
 # For Vercel serverless function
-# Export the app as the handler
-handler = app
+# Vercel expects a function called 'handler' or the app itself
+# The app object is already a WSGI application
+app = app
