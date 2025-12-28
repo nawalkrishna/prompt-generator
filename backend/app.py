@@ -21,15 +21,27 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-# Configure CORS - allow Vercel frontend and localhost
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,https://prompt-generator-1234.vercel.app").split(",")
-CORS(
-    app,
-    origins=allowed_origins,
-    supports_credentials=True,
-    allow_headers=["Content-Type", "Authorization"],
-    methods=["GET", "POST", "OPTIONS"]
-)
+# Configure CORS - allow all Vercel deployments and localhost
+# Using wildcard for Vercel preview URLs
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "*")
+if allowed_origins == "*":
+    # Allow all origins for development
+    CORS(
+        app,
+        resources={r"/*": {"origins": "*"}},
+        supports_credentials=False,
+        allow_headers=["Content-Type", "Authorization"],
+        methods=["GET", "POST", "OPTIONS"]
+    )
+else:
+    # Use specific origins in production if configured
+    CORS(
+        app,
+        origins=allowed_origins.split(","),
+        supports_credentials=True,
+        allow_headers=["Content-Type", "Authorization"],
+        methods=["GET", "POST", "OPTIONS"]
+    )
 
 compiler = PromptCompiler()
 
